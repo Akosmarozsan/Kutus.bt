@@ -33,8 +33,6 @@ https://github.com/Akosmarozsan/Kutus.bt
 
 ├── kutusbt.html        # A fő weboldal
 
-├── kepek/              # Galéria képei
-
-└── README.md           # Ez a dokumentum
+└── kepek/              # Galéria képei
 
 ---
