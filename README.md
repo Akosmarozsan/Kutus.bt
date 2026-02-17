@@ -29,11 +29,12 @@ https://github.com/Akosmarozsan/Kutus.bt
 
 ## 🛠️ Fájlstruktúra
 
-Kutus.bt/
-
 │
+
 ├── kutusbt.html        # A fő weboldal
+
 ├── kepek/              # Galéria képei
+
 └── README.md           # Ez a dokumentum
 
 ---
