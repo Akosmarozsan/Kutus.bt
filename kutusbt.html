@@ -39,16 +39,42 @@
       color: #ffffff;
     }
 
+    /* HERO VIDEO */
+
     .hero-section {
+      position: relative;
       padding: 6rem 0 5rem;
-      background: linear-gradient(rgba(5, 5, 9, 0.7), rgba(5, 5, 9, 0.7)), url('https://images.unsplash.com/photo-1486006396193-471619921b45?q=80&w=2000&auto=format&fit=crop') center/cover;
+      overflow: hidden;
+    }
+
+    .hero-section video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(5, 5, 9, 0.75);
+      z-index: 1;
+    }
+
+    .hero-section .container {
+      position: relative;
+      z-index: 2;
     }
 
     .hero-eyebrow {
       text-transform: uppercase;
       letter-spacing: 0.18em;
       font-size: 0.75rem;
-      color: #cf2e2e; /* Szerviz piros */
+      color: #cf2e2e;
       margin-bottom: 0.75rem;
       font-weight: 700;
     }
@@ -171,43 +197,51 @@
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg sticky-top">
-    <div class="container py-2">
-      <a class="navbar-brand" href="#">
-        <span class="logo-text">KUTUS BT.</span>
-      </a>
+
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container py-2">
+    <a class="navbar-brand" href="#">
+      <span class="logo-text">KUTUS BT.</span>
+    </a>
       
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="#szolgaltatasok">Szolgáltatások</a></li>
-          <li class="nav-item"><a class="nav-link" href="#galeria">Galéria</a></li>
-          <li class="nav-item"><a class="nav-link" href="#kapcsolat">Kapcsolat</a></li>
-        </ul>
-      </div>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="pricing.html">Szolgáltatások</a></li>
+        <li class="nav-item"><a class="nav-link" href="#galeria">Galéria</a></li>
+        <li class="nav-item"><a class="nav-link" href="faq.html">GYIK</a></li>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <section class="hero-section text-center text-lg-start">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-8">
-          <div class="hero-eyebrow">Megbízhatóság . Szakértelem . Garancia</div>
-          <h1 class="hero-title">Kutus Bt.<br>Teljeskörű Autószerviz</h1>
-          <p class="hero-text">
-            Legyen szó mechanikai javításról, karosszéria lakatos munkákról vagy precíziós fényezésről, nálunk autója a legjobb kezekben van. Több évtizedes tapasztalattal várjuk ügyfeleinket.
-          </p>
-          <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
-            <button class="btn-primary-custom">Időpontfoglalás</button>
-            <button class="btn-outline-custom">Szolgáltatásaink</button>
-          </div>
+<section class="hero-section text-center text-lg-start">
+
+  <video autoplay muted loop playsinline>
+    <source src="kepek/Golf Mk3 TDI 1.9 Smoke - B Bence (1080p, h264).mp4" type="video/mp4">
+  </video>
+
+  <div class="hero-overlay"></div>
+
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <div class="hero-eyebrow">Megbízhatóság . Szakértelem . Garancia</div>
+        <h1 class="hero-title">Kutus Bt.<br>Teljeskörű Autószerviz</h1>
+        <p class="hero-text">
+          Legyen szó mechanikai javításról, karosszéria lakatos munkákról vagy precíziós fényezésről, nálunk autója a legjobb kezekben van. Több évtizedes tapasztalattal várjuk ügyfeleinket.
+        </p>
+        <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
+          <button class="btn-primary-custom">Időpontfoglalás</button>
+          <button class="btn-outline-custom"><a class="nav-link" href="pricing.html">Szolgáltatásaink</a></button>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <section class="tagline-section" id="szolgaltatasok">
     <div class="container">

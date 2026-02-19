@@ -6,54 +6,124 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
-    body { background:#050509; color:#f5f5f5; }
-    .section { padding:5rem 0; }
+    body {
+      background-color: #050509;
+      color: #f5f5f5;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .section { padding: 6rem 0; }
+    
+    .section-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.75rem;
+      color: #cf2e2e;
+      font-weight: 700;
+    }
+
+    .accordion-item {
+      background: #0b0b12 !important;
+      border: 1px solid #181824 !important;
+      margin-bottom: 1rem;
+      border-radius: 8px !important;
+      overflow: hidden;
+    }
+
+    .accordion-button {
+      background: #0b0b12 !important;
+      color: #ffffff !important;
+      font-weight: 600;
+      padding: 1.5rem;
+      box-shadow: none !important;
+    }
+
+    .accordion-button:not(.collapsed) {
+      color: #cf2e2e !important;
+      border-bottom: 1px solid #181824;
+    }
+
+    .accordion-button::after {
+      filter: invert(1);
+    }
+
+    .accordion-body {
+      color: #d0d0e0;
+      line-height: 1.6;
+      padding: 1.5rem;
+    }
+
+    .btn-outline-custom {
+      border-radius: 4px;
+      padding: 0.8rem 2rem;
+      border: 1px solid #ffffff;
+      color: #f5f5ff;
+      font-weight: 500;
+      background: transparent;
+      transition: 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-outline-custom:hover {
+      background: #ffffff;
+      color: #050509;
+    }
   </style>
 </head>
 <body>
 
 <section class="section">
   <div class="container">
-    <h1 class="text-center mb-4">GYIK – Gyakran Ismételt Kérdések</h1>
-    <p class="text-center text-secondary mb-5">Itt találja a leggyakoribb kérdésekre adott válaszainkat.</p>
+    <div class="text-center mb-5">
+      <div class="section-eyebrow">Segíthetünk?</div>
+      <h1 class="fw-bold mt-2">Gyakran Ismételt Kérdések</h1>
+    </div>
 
-    <div class="accordion" id="faqAccordion">
-      <div class="accordion-item bg-dark text-light border-secondary">
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#q1">
-            Mennyi idő egy általános szerviz?
-          </button>
-        </h2>
-        <div id="q1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-          <div class="accordion-body">
-            Egy általános szerviz általában 1–2 órát vesz igénybe, az autó állapotától függően.
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="accordion" id="faqAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q1">
+                Mennyi idő egy általános szerviz?
+              </button>
+            </h2>
+            <div id="q1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Egy általános szerviz általában 1–2 órát vesz igénybe, az autó állapotától függően. Ez tartalmazza az olajcserét és az alapvető biztonsági átvizsgálást is.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q2">
+                Vállalnak biztosítós kárrendezést?
+              </button>
+            </h2>
+            <div id="q2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Igen, teljes körű biztosítói ügyintézést vállalunk. Levesszük a válláról az adminisztrációs terhet, és közvetlenül a biztosítóval egyeztetünk a javítás folyamatáról.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q3">
+                Szükséges időpontot foglalni?
+              </button>
+            </h2>
+            <div id="q3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Igen, a várakozási idő minimalizálása érdekében ajánlott az előzetes bejelentkezés telefonon vagy e-mailben.
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="accordion-item bg-dark text-light border-secondary">
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#q2">
-            Vállalnak biztosítós kárrendezést?
-          </button>
-        </h2>
-        <div id="q2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-          <div class="accordion-body">
-            Igen, teljes körű biztosítói ügyintézést vállalunk.
-          </div>
-        </div>
-      </div>
-
-      <div class="accordion-item bg-dark text-light border-secondary">
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#q3">
-            Szükséges időpontot foglalni?
-          </button>
-        </h2>
-        <div id="q3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-          <div class="accordion-body">
-            Igen, ajánlott az előzetes bejelentkezés.
-          </div>
+        
+        <div class="text-center mt-5">
+          <a href="kutusbt.html" class="btn-outline-custom">Vissza a főoldalra</a>
         </div>
       </div>
     </div>
