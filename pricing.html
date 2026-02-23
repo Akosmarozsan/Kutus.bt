@@ -4,15 +4,41 @@
   <meta charset="UTF-8" />
   <title>Kutus Bt. – Árazás</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
+
   <style>
     body {
       background-color: #050509;
       color: #f5f5f5;
       font-family: system-ui, -apple-system, sans-serif;
     }
+
+    .navbar {
+      background: #050509;
+      border-bottom: 1px solid #1b1b24;
+    }
+
+    .basket-wrapper {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .basket-count {
+      position: absolute;
+      top: -8px;
+      right: -10px;
+      background: #cf2e2e;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 0.7rem;
+      font-weight: bold;
+    }
+
     .section { padding: 6rem 0; }
-    
+
     .section-eyebrow {
       text-transform: uppercase;
       letter-spacing: 0.18em;
@@ -37,7 +63,6 @@
 
     .price-card.featured {
       border-color: #cf2e2e;
-      position: relative;
     }
 
     .package-name {
@@ -98,73 +123,251 @@
       background: #ffffff;
       color: #050509;
     }
+
+    .offcanvas {
+      background-color: #0b0b12;
+      color: #f5f5f5;
+      border-left: 1px solid #181824;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid #181824;
+    }
+
+    .btn-remove {
+      color: #cf2e2e;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+    }
+
+    .basket-price{
+        color: #ffffff;
+    }
+
+    .modal-content {
+      background-color: #0b0b12;
+    }
+
+    .form-control {
+      background-color: #000;
+      color: #fff;
+      border: 1px solid #333;
+    }
+
+    .form-control:focus {
+      border-color: #cf2e2e;
+      box-shadow: none;
+    }
   </style>
 </head>
 <body>
 
-<section class="section">
-  <div class="container">
-    <div class="text-center mb-5">
-      <div class="section-eyebrow">Átlátható árak</div>
-      <h1 class="fw-bold mt-2">Szerviz Csomagok</h1>
+
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container py-2">
+      <a class="navbar-brand text-white" href="kutusbt.html">KUTUS BT.</a>
+  
+      <div class="ms-auto d-flex align-items-center gap-4">
+        <a href="kutusbt.html" class="text-white text-decoration-none">Főoldal</a>
+  
+        <div class="basket-wrapper" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+          <i class="bi bi-cart3 fs-4 text-white"></i>
+          <span class="basket-count" id="cart-count">0</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-5">
+        <div class="section-eyebrow">Átlátható árak</div>
+        <h1 class="fw-bold mt-2">Szerviz Csomagok</h1>
+      </div>
+  
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="price-card text-center">
+            <div class="package-name">Karbantartás</div>
+            <h5>Alap csomag</h5>
+            <div class="price-amount">19 990 Ft</div>
+            <ul class="price-list">
+              <li>Olajcsere (munkadíj)</li>
+              <li>Alapvető átvizsgálás</li>
+              <li>Fékrendszer ellenőrzés</li>
+              <li>Folyadékszintek pótlása</li>
+            </ul>
+            <button class="btn-outline-custom" onclick="addToCart('Alap csomag', 19990)">Kiválasztom</button>
+          </div>
+        </div>
+  
+        <div class="col-md-4">
+          <div class="price-card text-center featured">
+            <div class="package-name">Legnépszerűbb</div>
+            <h5>Prémium csomag</h5>
+            <div class="price-amount">39 990 Ft</div>
+            <ul class="price-list">
+              <li>Teljes diagnosztika</li>
+              <li>Összes szűrő cseréje</li>
+              <li>Fék + futómű átvizsgálás</li>
+              <li>Világítás ellenőrzés</li>
+            </ul>
+            <button class="btn-primary-custom" onclick="addToCart('Prémium csomag', 39990)">Kiválasztom</button>
+          </div>
+        </div>
+  
+        <div class="col-md-4">
+          <div class="price-card text-center">
+            <div class="package-name">Professzionális</div>
+            <h5>Komplett csomag</h5>
+            <div class="price-amount">69 990 Ft</div>
+            <ul class="price-list">
+              <li>Teljes körű nagyszerviz</li>
+              <li>Műszaki vizsgára felkészítés</li>
+              <li>Részletes állapotfelmérés</li>
+              <li>Ajándék takarítás</li>
+            </ul>
+            <button class="btn-outline-custom" onclick="addToCart('Komplett csomag', 69990)">Kiválasztom</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Az Ön Kosara</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body d-flex flex-column">
+    <div id="cart-items-container">
+      <p class="text-center text-muted mt-5">A kosár jelenleg üres.</p>
     </div>
 
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="price-card text-center">
-          <div class="package-name">Karbantartás</div>
-          <h5>Alap csomag</h5>
-          <div class="price-amount">19 990 Ft</div>
-          <ul class="price-list">
-            <li>Olajcsere (munkadíj)</li>
-            <li>Alapvető átvizsgálás</li>
-            <li>Fékrendszer ellenőrzés</li>
-            <li>Folyadékszintek pótlása</li>
-          </ul>
-          <button class="btn-outline-custom">Kiválasztom</button>
-        </div>
+    <div class="mt-auto border-top pt-3">
+      <div class="d-flex justify-content-between mb-3">
+        <span class="fw-bold">Összesen:</span>
+        <span class="fw-bold text-danger" id="cart-total">0 Ft</span>
+      </div>
+      <button class="btn-primary-custom" data-bs-toggle="modal" data-bs-target="#orderModal">
+        Megrendelés véglegesítése
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="orderModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border border-danger">
+
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title">Számlázási adatok</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
 
-      <div class="col-md-4">
-        <div class="price-card text-center featured">
-          <div class="package-name">Legnépszerűbb</div>
-          <h5>Prémium csomag</h5>
-          <div class="price-amount">39 990 Ft</div>
-          <ul class="price-list">
-            <li>Teljes számítógépes diagnosztika</li>
-            <li>Összes szűrő cseréje</li>
-            <li>Fék + futómű átvizsgálás</li>
-            <li>Világítás ellenőrzés</li>
-          </ul>
-          <button class="btn-primary-custom">Kiválasztom</button>
-        </div>
-      </div>
+      <div class="modal-body">
+        <form id="orderForm">
+          <div class="mb-3">
+            <label class="form-label">Teljes név</label>
+            <input type="text" class="form-control" required>
+          </div>
 
-      <div class="col-md-4">
-        <div class="price-card text-center">
-          <div class="package-name">Professzionális</div>
-          <h5>Komplett csomag</h5>
-          <div class="price-amount">69 990 Ft</div>
-          <ul class="price-list">
-            <li>Teljes körű nagyszerviz</li>
-            <li>Műszaki vizsgára felkészítés</li>
-            <li>Részletes állapotfelmérés</li>
-            <li>Ajándék külső-belső takarítás</li>
-          </ul>
-          <button class="btn-outline-custom">Kiválasztom</button>
-        </div>
+          <div class="mb-3">
+            <label class="form-label">Cím</label>
+            <input type="text" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Bankkártyaszám</label>
+            <input type="text" maxlength="19" class="form-control" required>
+          </div>
+
+          <div class="row">
+            <div class="col-6 mb-3">
+              <label class="form-label">Lejárat</label>
+              <input type="text" class="form-control" placeholder="MM/ÉÉ" required>
+            </div>
+
+            <div class="col-6 mb-3">
+              <label class="form-label">CVC</label>
+              <input type="text" maxlength="3" class="form-control" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary-custom mt-3">
+            Rendelés leadása
+          </button>
+        </form>
       </div>
     </div>
   </div>
-
-        <div class="text-center mt-5">
-          <a href="kutusbt.html" class="btn-outline-custom" >Vissza a főoldalra</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+let cart = [];
+
+function addToCart(name, price) {
+  cart.push({ name, price });
+  updateCartUI();
+  new bootstrap.Offcanvas(document.getElementById('cartOffcanvas')).show();
+}
+
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  updateCartUI();
+}
+
+function updateCartUI() {
+  const container = document.getElementById('cart-items-container');
+  const count = document.getElementById('cart-count');
+  const totalElement = document.getElementById('cart-total');
+
+  count.innerText = cart.length;
+
+  if (cart.length === 0) {
+    container.innerHTML = '<p class="text-center text-muted mt-5">A kosár jelenleg üres.</p>';
+    totalElement.innerText = '0 Ft';
+    return;
+  }
+
+  let total = 0;
+  let html = '';
+
+  cart.forEach((item, index) => {
+    total += item.price;
+    html += `
+      <div class="cart-item">
+        <div>
+          <div class="fw-bold small">${item.name}</div>
+          <div class="basket-price small">${item.price.toLocaleString()} Ft</div>
+        </div>
+        <button class="btn-remove" onclick="removeFromCart(${index})">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+  totalElement.innerText = total.toLocaleString() + ' Ft';
+}
+
+document.getElementById("orderForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  alert("Sikeres rendelés! Köszönjük a vásárlást.");
+  cart = [];
+  updateCartUI();
+  bootstrap.Modal.getInstance(document.getElementById('orderModal')).hide();
+  bootstrap.Offcanvas.getInstance(document.getElementById('cartOffcanvas')).hide();
+});
+</script>
+
 </body>
-</html>
+</html> 
