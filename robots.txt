@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+# Fontos HTML oldalak
+Allow: /pricing.html
+Allow: /faq.html
+Allow: /idopontfoglalas.html
+
+# Rendszer / nem publikus mappák tiltása
+Disallow: /admin/
+Disallow: /private/
+Disallow: /tmp/
+Disallow: /cgi-bin/
+
+# Sitemap elérési út
+Sitemap: https://www.kutusbt.hu/sitemap.xml

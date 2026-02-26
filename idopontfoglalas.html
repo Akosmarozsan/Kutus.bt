@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<title>Időpontfoglalás - Kutus Bt.</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
+
+<style>
+body {
+  background-color: #050509;
+  color: #f5f5f5;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.navbar {
+  background: #050509;
+  border-bottom: 1px solid #1b1b24;
+}
+
+.navbar-nav .nav-link {
+  color: #d0d0e0;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ffffff;
+}
+
+.logo-text {
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  color: #ffffff;
+}
+
+
+
+/* NAPTÁR */
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-top: 40px;
+}
+
+.day-name {
+  text-align: center;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: #9a9ab5;
+}
+
+.day {
+  padding: 15px;
+  text-align: center;
+  border: 1px solid #1b1b24;
+  background: #0b0b12;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.day:hover {
+  border-color: #cf2e2e;
+  transform: translateY(-3px);
+}
+
+.selected {
+  background: #cf2e2e;
+}
+
+.booked {
+  background: #a32424;
+  cursor: not-allowed;
+}
+
+.btn-primary-custom {
+  background: #cf2e2e;
+  color: #ffffff;
+  border-radius: 4px;
+  padding: 0.8rem 2rem;
+  border: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-primary-custom:hover {
+  background: #a32424;
+  transform: translateY(-2px);
+}
+
+.btn-outline-custom {
+  border-radius: 4px;
+  padding: 0.8rem 2rem;
+  border: 1px solid #ffffff;
+  color: #f5f5ff;
+  background: transparent;
+  transition: 0.3s;
+}
+
+.btn-outline-custom:hover {
+  background: #ffffff;
+  color: #050509;
+}
+
+/* Popup */
+
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-box {
+  background: #0b0b12;
+  padding: 40px;
+  border: 1px solid #cf2e2e;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container py-2">
+    <a class="navbar-brand" href="kutusbt.html">
+      <span class="logo-text">KUTUS BT.</span>
+    </a>
+    <div class="ms-auto">
+      <a href="kutusbt.html" class="btn btn-outline-custom">← Vissza a főoldalra</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero-section text-center ">
+  <div class="hero-overlay mb-3"></div>
+
+  <div class="container">
+    <h1 class="display-5 fw-bold mb-4">Időpontfoglalás</h1>
+    <h5 id="monthYear" class="text-secondary"></h5>
+
+    <div class="calendar" id="calendar"></div>
+
+    <button class="btn-primary-custom mt-4" onclick="confirmBooking()">
+      Foglalás megerősítése
+    </button>
+  </div>
+</section>
+
+<div class="popup" id="popup">
+  <div class="popup-box">
+    <h5 id="popupText"></h5>
+    <button class="btn-primary-custom mt-3" onclick="closePopup()">Bezárás</button>
+  </div>
+</div>
+
+<script>
+const calendar = document.getElementById("calendar");
+const monthYear = document.getElementById("monthYear");
+
+const today = new Date();
+let currentMonth = today.getMonth();
+let currentYear = today.getFullYear();
+let selectedDate = null;
+
+const dayNames = ["H","K","Sze","Cs","P","Szo","V"];
+
+function generateCalendar(month, year) {
+  calendar.innerHTML = "";
+
+  dayNames.forEach(day => {
+    const div = document.createElement("div");
+    div.classList.add("day-name");
+    div.innerText = day;
+    calendar.appendChild(div);
+  });
+
+  const firstDay = (new Date(year, month)).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  monthYear.innerText = year + " - " + (month + 1);
+
+  let startDay = firstDay === 0 ? 6 : firstDay - 1;
+
+  for (let i = 0; i < startDay; i++) {
+    const empty = document.createElement("div");
+    calendar.appendChild(empty);
+  }
+
+  let foglalasok = JSON.parse(localStorage.getItem("foglalasok")) || [];
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const div = document.createElement("div");
+    const fullDate = `${year}-${month+1}-${day}`;
+    div.classList.add("day");
+    div.innerText = day;
+
+    if (foglalasok.includes(fullDate)) {
+      div.classList.add("booked");
+    }
+
+    div.onclick = function() {
+      if (div.classList.contains("booked")) return;
+      document.querySelectorAll(".day").forEach(d => d.classList.remove("selected"));
+      div.classList.add("selected");
+      selectedDate = fullDate;
+    };
+
+    calendar.appendChild(div);
+  }
+}
+
+function confirmBooking() {
+  if (!selectedDate) {
+    showPopup("Válassz ki egy napot!");
+    return;
+  }
+
+  let foglalasok = JSON.parse(localStorage.getItem("foglalasok")) || [];
+
+  if (foglalasok.includes(selectedDate)) {
+    showPopup("Ez a nap már foglalt!");
+  } else {
+    foglalasok.push(selectedDate);
+    localStorage.setItem("foglalasok", JSON.stringify(foglalasok));
+    showPopup("Sikeres foglalás!");
+    generateCalendar(currentMonth, currentYear);
+  }
+}
+
+function showPopup(msg) {
+  document.getElementById("popupText").innerText = msg;
+  document.getElementById("popup").style.display = "flex";
+}
+
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
+
+generateCalendar(currentMonth, currentYear);
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
